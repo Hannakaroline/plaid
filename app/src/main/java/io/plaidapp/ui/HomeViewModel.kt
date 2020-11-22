@@ -32,6 +32,8 @@ import io.plaidapp.core.data.prefs.SourcesRepository
 import io.plaidapp.core.designernews.data.DesignerNewsSearchSourceItem
 import io.plaidapp.core.designernews.data.login.LoginRepository
 import io.plaidapp.core.dribbble.data.DribbbleSourceItem
+import io.plaidapp.core.enjoei.data.Enjoei
+import io.plaidapp.core.enjoei.ui.EnjoeiButtonViewHolder
 import io.plaidapp.core.feed.FeedProgressUiModel
 import io.plaidapp.core.feed.FeedUiModel
 import io.plaidapp.core.ui.expandPopularItems
@@ -70,7 +72,7 @@ class HomeViewModel(
     private val onDataLoadedCallback = object : OnDataLoadedCallback<List<PlaidItem>> {
         override fun onDataLoaded(data: List<PlaidItem>) {
             val oldItems = feedData.value.orEmpty()
-            updateFeedData(oldItems, data)
+            updateFeedData(oldItems, listOf(Enjoei) + data)
         }
     }
     // listener for notifying adapter when data sources are deactivated

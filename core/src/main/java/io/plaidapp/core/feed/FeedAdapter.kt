@@ -48,6 +48,8 @@ import io.plaidapp.core.data.pocket.PocketUtils
 import io.plaidapp.core.designernews.data.stories.model.Story
 import io.plaidapp.core.designernews.ui.stories.StoryViewHolder
 import io.plaidapp.core.dribbble.data.api.model.Shot
+import io.plaidapp.core.enjoei.data.Enjoei
+import io.plaidapp.core.enjoei.ui.EnjoeiButtonViewHolder
 import io.plaidapp.core.producthunt.data.api.model.Post
 import io.plaidapp.core.producthunt.ui.ProductHuntPostHolder
 import io.plaidapp.core.ui.DribbbleShotHolder
@@ -121,6 +123,9 @@ class FeedAdapter(
             TYPE_LOADING_MORE -> LoadingMoreHolder(
                 layoutInflater.inflate(R.layout.infinite_loading, parent, false)
             )
+            TYPE_ENJOEI_BUTTON -> EnjoeiButtonViewHolder(
+                layoutInflater.inflate(R.layout.enjoei_button_item, parent, false),{}
+            )
             else -> throw IllegalStateException("Unsupported View type")
         }
     }
@@ -133,6 +138,7 @@ class FeedAdapter(
             )
             TYPE_PRODUCT_HUNT_POST -> (holder as ProductHuntPostHolder).bind((getItem(position) as Post))
             TYPE_LOADING_MORE -> bindLoadingViewHolder(holder as LoadingMoreHolder, position)
+            TYPE_ENJOEI_BUTTON -> {}
             else -> throw IllegalStateException("Unsupported View type")
         }
     }
@@ -309,6 +315,7 @@ class FeedAdapter(
                 is Story -> return TYPE_DESIGNER_NEWS_STORY
                 is Shot -> return TYPE_DRIBBBLE_SHOT
                 is Post -> return TYPE_PRODUCT_HUNT_POST
+                is Enjoei -> return TYPE_ENJOEI_BUTTON
             }
         }
         return TYPE_LOADING_MORE
@@ -389,6 +396,8 @@ class FeedAdapter(
         private const val TYPE_DRIBBBLE_SHOT = 1
         private const val TYPE_PRODUCT_HUNT_POST = 2
         private const val TYPE_LOADING_MORE = -1
+        private const val TYPE_ENJOEI_BUTTON = 3
+
 
         fun createSharedElementReenterCallback(
             context: Context
