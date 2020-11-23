@@ -123,10 +123,17 @@ class FeedAdapter(
             TYPE_LOADING_MORE -> LoadingMoreHolder(
                 layoutInflater.inflate(R.layout.infinite_loading, parent, false)
             )
-            TYPE_ENJOEI_BUTTON -> EnjoeiButtonViewHolder(
-                layoutInflater.inflate(R.layout.enjoei_button_item, parent, false),{}
-            )
+            TYPE_ENJOEI_BUTTON -> createEnjoeiButtonViewHolder(parent)
             else -> throw IllegalStateException("Unsupported View type")
+        }
+    }
+
+
+    fun createEnjoeiButtonViewHolder(parent: ViewGroup): EnjoeiButtonViewHolder {
+        return EnjoeiButtonViewHolder(
+            layoutInflater.inflate(R.layout.enjoei_button_item, parent, false)
+        ) {
+            openEjoeiFeed()
         }
     }
 
@@ -138,7 +145,8 @@ class FeedAdapter(
             )
             TYPE_PRODUCT_HUNT_POST -> (holder as ProductHuntPostHolder).bind((getItem(position) as Post))
             TYPE_LOADING_MORE -> bindLoadingViewHolder(holder as LoadingMoreHolder, position)
-            TYPE_ENJOEI_BUTTON -> {}
+            TYPE_ENJOEI_BUTTON -> {
+            }
             else -> throw IllegalStateException("Unsupported View type")
         }
     }
@@ -198,6 +206,11 @@ class FeedAdapter(
             *data.sharedElements
         )
         host.startActivity(intent, options.toBundle())
+    }
+
+    private fun openEjoeiFeed() {
+        val intent = intentTo(Activities.Enjoei)
+        host.startActivity(intent)
     }
 
     private fun openTabDesignerNews(story: Story) {

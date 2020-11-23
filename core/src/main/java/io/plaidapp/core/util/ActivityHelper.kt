@@ -137,4 +137,9 @@ object Activities {
         const val EXTRA_SAVE_DESIGNER_NEWS = "EXTRA_SAVE_DESIGNER_NEWS"
         const val RESULT_CODE_SAVE = 7
     }
+
+    object Enjoei : AddressableActivity {
+        override val className = "$PACKAGE_NAME.enjoei.ui.shop.ShopActivity"
+
+    }
 }

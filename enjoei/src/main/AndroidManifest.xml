@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="io.plaidapp.enjoei">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <dist:module
+        dist:instant="false"
+        dist:onDemand="false"
+        dist:title="@string/title_enjoei">
+        <dist:fusing dist:include="true" />
+    </dist:module>
+
+    <application android:name="io.plaidapp.ui.PlaidApplication">
+
+        <activity
+            android:name=".ui.shop.ShopActivity"
+            android:parentActivityName="io.plaidapp.ui.HomeActivity"
+            android:theme="@style/Plaid.Translucent" />
+
+    </application>
+
+</manifest>

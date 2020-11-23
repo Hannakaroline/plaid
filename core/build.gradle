@@ -18,6 +18,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: "com.apollographql.apollo"
 
 apply from: '../shared_dependencies.gradle'
 apply from: '../test_dependencies.gradle'
@@ -83,11 +84,21 @@ dependencies {
     implementation "org.jsoup:jsoup:${versions.jsoup}"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
+    // The core runtime dependencies
+    implementation("com.apollographql.apollo:apollo-runtime:2.2.2")
+    // Coroutines extensions for easier asynchronicity handling
+
     kapt "com.github.bumptech.glide:compiler:${versions.glide}"
     kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
     kapt "androidx.annotation:annotation:${versions.androidx}"
+
 }
 
 androidExtensions {
     experimental = true
+}
+
+apollo {
+    // instruct the compiler to generate Kotlin models
+    generateKotlinModels.set(true)
 }

@@ -10,5 +10,8 @@ class EnjoeiButtonViewHolder(
     itemView: View,
     private val onItemClicked: () -> Unit
 ) : RecyclerView.ViewHolder(itemView), Divided {
+    init {
+        itemView.setOnClickListener { onItemClicked() }
+    }
 
 }

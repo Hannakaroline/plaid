@@ -38,7 +38,7 @@ android {
 
         resConfig 'en'
         manifestPlaceholders += [
-            crashlyticsEnabled: false
+                crashlyticsEnabled: false
         ]
     }
 
@@ -71,10 +71,11 @@ android {
     }
 
     dynamicFeatures = [
-        ':about',
-        ':designernews',
-        ':dribbble',
-        ':search'
+            ':about',
+            ':designernews',
+            ':dribbble',
+            ':search',
+            ':enjoei'
     ]
 }
 
