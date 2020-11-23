@@ -1,0 +1,92 @@
+# Write your query 	# used to load fotos
+fragment PhotoFragment on Photo {
+	image_public_id
+}
+
+# fields to be used on lists of product's cards
+fragment ProductCardFragment on Product {
+	id
+	title{ name, slug }
+	brand{ displayable_name }
+	price{ current, original }
+	shipping { free, type }
+	size { name, slug }
+	photo{ ...PhotoFragment }
+	store { seller { id }, displayable {name, avatar { ...PhotoFragment }}, path }
+	categories { department { slug }, category { slug }, sub_category { slug } }
+	can_be_added_to_bundle
+	variations{ ...VariationsFragment }
+}
+
+fragment VariationsFragment on Variations {
+	labels {
+		tag
+		title_singular
+		title_plural
+		choose_one
+		choose_another
+		unavailable
+		edit
+	}
+	options {
+		slug
+		name
+		tag
+		available
+	}
+}
+
+
+fragment SubCategoryAggregationFragment on SubCategoryAggregation {
+	name, slug
+}
+
+fragment DepartmentAggregationFragment on DepartmentAggregation {
+	name, slug
+}
+
+fragment BrandsAggregationFragment on BrandAggregation {
+	name, slug
+}
+
+fragment SizeTypeAggregationFragment on SizeTypeAggregation {
+	name
+	sizes { name, slug }
+}
+
+fragment ProductsAggregationsFragment on ProductsAggregations {
+	relevant_sub_categories {
+		...SubCategoryAggregationFragment
+	}
+	departments {
+		...DepartmentAggregationFragment
+	}
+	brands {
+		...BrandsAggregationFragment
+	}
+	size_types {
+		...SizeTypeAggregationFragment
+	}
+}
+
+fragment EnjuSearchFragment on Search {
+	term
+	products(first: $count, after: $after) {
+		total
+		aggregations @include(if: $aggregations) {
+			...ProductsAggregationsFragment
+		}
+		edges {
+			cursor
+			node {
+				...ProductCardFragment
+			}
+		}
+	}
+}
+
+query SearchForProduct($query: ProductsSearchInput!, $count: Int = 20, $after: String, $aggregations: Boolean!) {
+	search(products: $query) {
+		...EnjuSearchFragment
+	}
+}
